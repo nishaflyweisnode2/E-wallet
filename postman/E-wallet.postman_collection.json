@@ -1,0 +1,126 @@
+{
+	"info": {
+		"_postman_id": "5015ca03-87ae-4957-94f1-c950e46c7ec8",
+		"name": "E-wallet",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "19685571"
+	},
+	"item": [
+		{
+			"name": "creteUserWallete",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"firstName\":\"Richard\",\r\n    \"lastName\":\"dev\",\r\n    \"email\":\"richardNova@gmail.com\",\r\n    \"phone\":\"6382738652\",\r\n    \"password\":\"Richard@123\",\r\n    \"confirmPassword\":\"Richard@123\"\r\n\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "localhost:8080/api/createWallet",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"api",
+						"createWallet"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "signUp-with-OTP",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"number\":\"+916382738652\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "localhost:8080/api/user/signup",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"api",
+						"user",
+						"signup"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "verify-otp",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"number\":\"+916382738652\",\r\n    \"otp\":\"234574\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "localhost:8080/api/user/sigup/verify",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"api",
+						"user",
+						"sigup",
+						"verify"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "updateUser",
+			"request": {
+				"method": "PUT",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"firstName\":\"kimjohn\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "localhost:8080/api/updateUser/6351010b3298e3b80bb49fe5",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"api",
+						"updateUser",
+						"6351010b3298e3b80bb49fe5"
+					]
+				}
+			},
+			"response": []
+		}
+	]
+}
