@@ -43,7 +43,11 @@ router.post('/upload',(req,res)=>{
 })
 
 
-
+router.get('/', (req,res) => {
+    res.status(200).json({
+        message: "Started Date "
+    })
+})
 router.post("/account",createAccount);
 router.post("/login",login)
 router.put("/updateDetails/:id",authentication,upload,updateDetails)
