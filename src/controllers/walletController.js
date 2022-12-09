@@ -73,7 +73,7 @@ const login = async (req, res) => {
     let data = req.body;
     let phoneNumber = data.phoneNumber;
     let password = data.password;
-
+    console.log(data)
     
     let result = await walletModel.findOne({
       phoneNumber: phoneNumber,
