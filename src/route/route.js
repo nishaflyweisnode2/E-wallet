@@ -58,5 +58,4 @@ router.post("/helpandsupport",createhelpandsupport)
 router.put("/helpandsupport/:id",updateHelpandSupport)
 
 // router.post("/uploadimage",uploadProfile)
-
 module.exports= router
