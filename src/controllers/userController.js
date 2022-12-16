@@ -71,3 +71,59 @@ if(rightOtpFind.number == req.body.number && validUser){
 }
 }
 
+
+
+function generateOTP() {
+    var digits = '0123456789';
+    let OTP = '';
+    for (let i = 0; i < 6; i++ ) {
+        OTP += digits[Math.floor(Math.random() * 10)];
+    }
+    return OTP;
+}
+
+
+exports.login = async(req,res) => {
+    try{
+     const number = req.body.number
+     const OTP = generateOTP();
+     const data = await Otp.find({number: number})
+     console.log(data)
+     if(data.length == 0){
+
+     const userData = await Otp.create({
+        number:number,
+        otp: OTP
+     })
+      return res.status(200).json({
+        OTP : userData.otp
+     })
+    }else{
+      return   res.status(200).json({
+        otp: data[0].otp
+      })
+    }
+    }catch(err){
+        console.log(err);
+    }
+}
+
+exports.verifyotp = async(req,res) => {
+    try{
+   const data = await Otp.find({otp: req.body.otp});
+   if(data.length == 0){
+    return res.status(500).json({
+        message: "Invalid Otp"
+    })
+   }else{
+    res.status(200).json({
+        message: "Login Done"
+    })
+   }
+    }catch(err){
+        console.log(err);
+        res.status(400).json({
+            message: "Something Wrong "
+        })
+    }
+}
