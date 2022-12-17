@@ -1,7 +1,8 @@
 const bcrypt = require('bcrypt')
 const _ = require('lodash')
 const axios = require('axios')
-const otpGenerator = require('otp-generator')
+const otpGenerator = require('otp-generator');
+const wallet = require('../model/walletModel');
 
 var accountSid = process.env.TWILIO_ACCOUNT_SID; 
 var authToken = process.env.TWILIO_AUTH_TOKEN;
@@ -13,7 +14,8 @@ require("dotenv").config();
 
 
 const { User} = require('../model/userModel')
-const{Otp} = require('../model/otpModel')
+const{Otp} = require('../model/otpModel');
+const walletModel = require('../model/walletModel');
 // const loginModel  = require("../model/loginModel")
 
 module.exports.signUp = async(req,res)=>{
@@ -131,7 +133,7 @@ exports.verifyotp = async(req,res) => {
 
 exports.getUserData = async(req,res) => {
     try{
-const data = await User.find();
+const data = await wallet.find();
 res.status(200).json({
     details: data
 })
@@ -140,3 +142,14 @@ res.status(200).json({
     }
 }
 
+
+exports.getUserByID = async(req,res) => {
+    try{
+        console.log(req.params.id)
+    const Data  =await  wallet.findOne({_id: req.params.id})
+    res.status(200).json({details : Data })
+    }catch(err){
+        console.log(err)
+        res.status(400).json({message: err.message})
+    }
+}
