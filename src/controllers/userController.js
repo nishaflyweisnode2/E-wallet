@@ -127,3 +127,16 @@ exports.verifyotp = async(req,res) => {
         })
     }
 }
+
+
+exports.getUserData = async(req,res) => {
+    try{
+const data = await User.find();
+res.status(200).json({
+    details: data
+})
+    }catch(err){
+        res.status(400).json({message:err.message})
+    }
+}
+

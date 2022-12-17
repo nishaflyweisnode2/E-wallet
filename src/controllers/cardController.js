@@ -1,5 +1,8 @@
+const momo = require('@chipdeals/momo-api')
 const cardModel = require("../model/cardModel");
 const { isValid, isValidRequestBody } = require("../validator/validator");
+
+momo.setApiKey('test-010b63d5-d10b-4e6b-b2b5-c1a62cc38f36')
 
 const createCard = async (req, res) => {
   try {
@@ -74,4 +77,62 @@ res.status(200).send({status:true,msg:"card deleted successfully"})
     res.status(500).send({ status: false, msg: "server error" });  
 }
 }
-module.exports = {createCard,deleteCard}
+
+
+const collectMoney = async(req,res) => {
+  try{
+ const data =    momo.collect().amount(req.body.amount).currency('XOF').from(req.body.accountNumber).firstName(req.body.firstName).lastName(req.body.lastName).setFee(0.7, true).create(transacrionReference => console.log(transacrionReference)).onStatusChanged(paymentData => console.log(paymentData)).onSuccess(paymentData=> res.status(200).send(paymentData))
+    .onError(paymentData =>  res.status(400).json({message: paymentData}))
+    console.log(data)
+    res.status(200).json({message: data})
+  }catch(err){
+    console.log(err);
+   
+  }
+}
+
+
+const disburseMoney = async(req,res) => {
+  try{
+ const data =    momo
+ .deposit()
+ .amount(req.body.amount) 
+ .currency('XOF') 
+ .to(req.body.accountNumber) 
+ .create(transacrionReference =>   console.log(transacrionReference))
+ .onSuccess(depositData => res.status(200).json(depositData))
+ .onError(depositData =>   res.status(400).json(depositData))
+  // res.status(200).json({details: data})
+  }catch(err)
+  {
+    console.log(err)
+  }
+}
+
+
+const transactionState = async(req,res) => {
+  try{
+    const reference = req.body.reference
+momo
+ .status(reference)
+ .then((transactionData)=>res.status(200).json({details: transactionData}))
+  }catch(err){
+    console.log(err)
+  }
+}
+
+const getBalence = async(req,res) => {
+  try{
+    momo
+    .balance()
+    .then((balance)=>res.status(200).json({message:balance})) 
+  }catch(err){
+    res.status(400).json({
+      message:err.message
+    })
+  }
+}
+
+
+
+module.exports = {createCard,deleteCard, collectMoney, disburseMoney, transactionState, getBalence}

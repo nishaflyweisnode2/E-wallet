@@ -5,7 +5,7 @@ const multer = require("multer")
 
 
 const {createAccount,updateDetails,login,logout}= require("../controllers/walletController");
-const {createCard,deleteCard} = require("../controllers/cardController")
+const {createCard,deleteCard, collectMoney, disburseMoney, transactionState, getBalence} = require("../controllers/cardController")
 const {createPrivatePolicy} = require("../controllers/privacyController")
 const {createhelpandsupport,updateHelpandSupport}= require("../controllers/helpAndSupportController")
 const ImageModel = require("../model/imageModel")
@@ -52,13 +52,20 @@ router.post("/account",createAccount);
 router.post("/login",login)
 router.put("/updateDetails/:id",authentication,upload,updateDetails)
 router.get("/logout",logout)
+// Banl API 
+router.post('/collectmoney', collectMoney);
+router.post('/depositmoney', disburseMoney);
+router.get('/transaction', transactionState);
+router.get('/balence', getBalence)
 
 router.post("/addCard",createCard)
 router.delete("/deleteCard/:id",deleteCard)
 
 router.post("/policy",createPrivatePolicy)
+// get
 
 router.post("/helpandsupport",createhelpandsupport)
+// get 
 router.put("/helpandsupport/:id",updateHelpandSupport)
 
 // router.post("/uploadimage",uploadProfile)

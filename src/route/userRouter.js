@@ -1,5 +1,5 @@
 const router = require('express').Router();
-const{ signUp ,verifyOtp, login, verifyotp} = require('../controllers/userController')
+const{ signUp ,verifyOtp, login, verifyotp, getUserData} = require('../controllers/userController')
 
 
 router.route('/signup')
@@ -11,5 +11,8 @@ router.route('/sigup/verify')
 
 router.route('/login').post(login);
 router.route('/verify').post(verifyotp);
+
+
+router.route('/all').get(getUserData)
 
 module.exports = router
