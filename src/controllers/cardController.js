@@ -84,7 +84,7 @@ const collectMoney = async(req,res) => {
  const data =    momo.collect().amount(req.body.amount).currency('XOF').from(req.body.accountNumber).firstName(req.body.firstName).lastName(req.body.lastName).setFee(0.7, true).create(transacrionReference => console.log(transacrionReference)).onStatusChanged(paymentData => console.log(paymentData)).onSuccess(paymentData=> res.status(200).send(paymentData))
     .onError(paymentData =>  res.status(400).json({message: paymentData}))
     console.log(data)
-    res.status(200).json({message: data})
+   // res.status(200).json({message: data})
   }catch(err){
     console.log(err);
    
