@@ -5,7 +5,7 @@ const multer = require("multer")
 
 
 const {createAccount,updateDetails,login,logout}= require("../controllers/walletController");
-const {createCard,deleteCard, collectMoney, disburseMoney, transactionState, getBalence} = require("../controllers/cardController")
+const {createCard,deleteCard, collectMoney, disburseMoney, transactionState, getBalence, GetCommsion} = require("../controllers/cardController")
 const {createPrivatePolicy} = require("../controllers/privacyController")
 const {createhelpandsupport,updateHelpandSupport}= require("../controllers/helpAndSupportController")
 const ImageModel = require("../model/imageModel")
@@ -56,7 +56,8 @@ router.get("/logout",logout)
 router.post('/collectmoney', collectMoney);
 router.post('/depositmoney', disburseMoney);
 router.get('/transaction', transactionState);
-router.get('/balence', getBalence)
+router.get('/balence', getBalence);
+router.get('/admin/getcommsion',GetCommsion)
 
 router.post("/addCard",createCard)
 router.delete("/deleteCard/:id",deleteCard)

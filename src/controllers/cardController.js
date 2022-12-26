@@ -1,7 +1,7 @@
 const momo = require('@chipdeals/momo-api')
 const cardModel = require("../model/cardModel");
 const { isValid, isValidRequestBody } = require("../validator/validator");
-
+const commission = require('../model/admin')
 momo.setApiKey('test-010b63d5-d10b-4e6b-b2b5-c1a62cc38f36')
 
 const createCard = async (req, res) => {
@@ -81,10 +81,18 @@ res.status(200).send({status:true,msg:"card deleted successfully"})
 
 const collectMoney = async(req,res) => {
   try{
- const data =    momo.collect().amount(req.body.amount).currency('XOF').from(req.body.accountNumber).firstName(req.body.firstName).lastName(req.body.lastName).setFee(0.7, true).create(transacrionReference => console.log(transacrionReference)).onStatusChanged(paymentData => console.log(paymentData)).onSuccess(paymentData=> res.status(200).send(paymentData))
+    const comm = (req.body.amount /100) *3;
+    const Data = await commission.create({
+      userId: req.body.userId, 
+      commsion: parseInt(comm)
+    });
+   console.log(Data)
+ const data =    momo.collect().amount(req.body.amount).currency('XOF').from(req.body.accountNumber).firstName(req.body.firstName).lastName(req.body.lastName).setFee(0.7, true).create(transacrionReference => console.log(transacrionReference)).onStatusChanged(paymentData => console.log(paymentData)).onSuccess(paymentData=> res.status(200).send(paymentData, Data))
     .onError(paymentData =>  res.status(400).json({message: paymentData}))
-    console.log(data)
-   // res.status(200).json({message: data})
+ 
+ 
+    
+   //res.status(200).json({message: data})
   }catch(err){
     console.log(err);
    
@@ -133,6 +141,17 @@ const getBalence = async(req,res) => {
   }
 }
 
+const GetCommsion = async(req, res) => {
+  try{
+   const data = await commission.find();
+   res.status(200).json({data})
+  }catch(err){
+    res.status(400).json({
+      message: err
+    })
+  }
+}
 
 
-module.exports = {createCard,deleteCard, collectMoney, disburseMoney, transactionState, getBalence}
+
+module.exports = {createCard,deleteCard, collectMoney, disburseMoney, transactionState, getBalence, GetCommsion}
